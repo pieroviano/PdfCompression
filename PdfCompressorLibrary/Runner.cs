@@ -23,22 +23,25 @@ namespace PdfCompressorLibrary
         /// </summary>
         private static float compressionLevel = 0.37f;  
 
-        public static void Run(params string[] args)
+        public static void Run(string sourceFolder, string destinationFolder, params string[] args)
         {
             ReadConfigSettings();
+            var list = new List<string>();
 
             if (args == null || args.Length == 0)
             {
                 throw new Exception("Please, provide the PDf filename to start compression!");
             }
             var filename = args[0];
-            var sourcePath = SourceFolder + filename;
+            sourceFolder ??= SourceFolder;
+            var sourcePath = sourceFolder + filename;
             if (!File.Exists(sourcePath))
             {
                 throw new ArgumentException(string.Format("PDF file doesn't exist in file system. Validate the full path: \"{0}\"", sourcePath));
             }
 
-            var destinationPath = DestinationFolder + filename;
+            destinationFolder ??= DestinationFolder;
+            var destinationPath = destinationFolder + filename;
             var _factory = new ImageCompressorFactory();
 
             Logger.LogInfo(string.Format("Start processing of file \"{0}\"", filename));
@@ -46,6 +49,7 @@ namespace PdfCompressorLibrary
 
             PdfReader.unethicalreading = true;
             var pdfReader = new PdfReader(sourcePath);
+            list.Add(destinationPath);
             using (var fs = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 using (var pdfStamper = new PdfStamper(pdfReader, fs))

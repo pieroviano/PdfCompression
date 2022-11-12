@@ -17,8 +17,8 @@ namespace UnitTests
         [TestMethod]
         public void RunCompression()
         {
-            var (sourceFolder,_)=PdfCompressor.ReadConfigSettings();
-            PdfCompressor.Run(Directory.GetFiles(sourceFolder, "*.pdf").Select(f=> Path.GetFileName(f)).ToArray());
+            var (sourceFolder,targetFolder)=PdfCompressor.ReadConfigSettings();
+            PdfCompressor.Run(sourceFolder, targetFolder, Directory.GetFiles(sourceFolder, "*.pdf").Select(f=> Path.GetFileName(f)).ToArray());
         }
     }
 }
