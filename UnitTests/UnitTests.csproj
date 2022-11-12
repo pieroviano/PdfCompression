@@ -12,7 +12,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\App.config" Link="PdfCompressorLibrary.dll.config" />
+    <Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="VVVV.FreeImage" Version="3.15.1.1" />
