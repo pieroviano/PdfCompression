@@ -13,10 +13,16 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
+    <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net45.config">
       <Pack>True</Pack>
       <PackagePath>\lib\net45\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net48.config">
+      <Pack>True</Pack>
+      <PackagePath>\lib\net48\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="PdfCompressorLibrary.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <BuildAction>Content</BuildAction>
