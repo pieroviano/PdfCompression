@@ -23,7 +23,7 @@ namespace PdfCompressorLibrary
         /// </summary>
         private static float compressionLevel = 0.37f;  
 
-        public static void Run(string[] args)
+        public static void Run(params string[] args)
         {
             ReadConfigSettings();
 
