@@ -23,7 +23,7 @@ namespace PdfCompressorLibrary
         /// </summary>
         private static float compressionLevel = 0.37f;  
 
-        public static void Run(string sourceFolder, string destinationFolder, params string[] args)
+        public static string[] Run(string sourceFolder, string destinationFolder, params string[] args)
         {
             ReadConfigSettings();
             var list = new List<string>();
@@ -126,6 +126,7 @@ namespace PdfCompressorLibrary
             Logger.LogInfo(string.Format("Compression of file \"{0}\" completed on \"{1}\"",filename, timing.Elapsed));
             var compression = CalculateCompression(sourcePath, destinationPath);
             Logger.LogInfo(string.Format("File was compressed on {0} %", compression));
+            return list.ToArray();
         }
 
         public static (string, string) ReadConfigSettings()
