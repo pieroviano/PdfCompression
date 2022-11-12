@@ -1,3 +1,4 @@
+mklink /j Packages ..\WhenTheVersion\Packages
 del ..\WhenTheVersion\Packages\PdfCompressorLibrary.*
 rmdir /s /q %userprofile%\.nuget\Packages\PdfCompressorLibrary
 nuget restore PdfCompressorLibrary.sln
