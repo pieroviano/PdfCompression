@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net48;</TargetFrameworks>
+    <TargetFrameworks>net40;net45;net48;net5.0-windows;net6.0-windows</TargetFrameworks>
     <AssemblyTitle>PdfCompressorLibrary</AssemblyTitle>
     <Company>EPAM Systems</Company>
     <Product>PdfCompressor</Product>
@@ -18,6 +18,16 @@
     <RepositoryType>https://github.com/rock-walker/PdfCompression</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net50.config">
+      <Pack>True</Pack>
+      <PackagePath>\lib\net5.0-windows7.0\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net60.config">
+      <Pack>True</Pack>
+      <PackagePath>\lib\net6.0-windows7.0\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net40.config">
       <Pack>True</Pack>
       <PackagePath>\lib\net40\</PackagePath>
@@ -36,11 +46,11 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net48.config">
+    <None Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.net48.config">
       <Pack>True</Pack>
       <PackagePath>\lib\net48\</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="PdfCompressorLibrary.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <BuildAction>Content</BuildAction>
@@ -50,15 +60,21 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FreeImage-dotnet-core" Version="4.3.6" />
+    <PackageReference Include="FreeImage-dotnet-core" Version="4.3.7" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'">
     <Reference Include="System.configuration" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+
     <PackageReference Include="itextsharp" Version="5.5.13.3" />
-  </ItemGroup>    
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows' or '$(TargetFramework)' == 'net5.0-windows'">
+    <PackageReference Include="iTextSharp.netstandard" Version="5.5.13.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Exec Command="copy /y $(ProjectDir)bin\$(Configuration)\*.nupkg $(SolutionDir)Packages" />

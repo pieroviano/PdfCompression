@@ -136,7 +136,11 @@ namespace PdfCompressorLibrary
             return list.ToArray();
         }
 
+#if NET40
+        public static Tuple<string, string> ReadConfigSettings()
+#else
         public static (string, string) ReadConfigSettings()
+#endif
         {
             var config = ConfigurationManager.OpenExeConfiguration("PdfCompressorLibrary.dll");
             if (config.AppSettings.Settings.Count == 0)
@@ -152,7 +156,11 @@ namespace PdfCompressorLibrary
 
             SourceFolder = config.AppSettings.Settings["sourcePdfFolder"].Value;
             DestinationFolder = config.AppSettings.Settings["destinationPdfFolder"].Value;
+#if NET40
+            return new Tuple<string, string>(SourceFolder, DestinationFolder);
+#else
             return (SourceFolder, DestinationFolder);
+#endif
         }
 
         private static int CalculateCompression(string source, string dest)

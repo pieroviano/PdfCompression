@@ -8,7 +8,9 @@ using System.Security.Permissions;
 
 namespace PdfCompressorLibrary.Infrastructure
 {
+#if !NET5_0_OR_GREATER
     [HostProtection(SecurityAction.LinkDemand, Synchronization = true)]
+#endif
     public class SimpleTraceListener : TextWriterTraceListener
     {
         /// <summary>
