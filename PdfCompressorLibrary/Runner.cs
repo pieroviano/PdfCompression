@@ -34,14 +34,14 @@ namespace PdfCompressorLibrary
             }
             var filename = args[0];
             sourceFolder ??= SourceFolder;
-            var sourcePath = sourceFolder + filename;
+            var sourcePath = Path.Combine(sourceFolder, filename);
             if (!File.Exists(sourcePath))
             {
                 throw new ArgumentException(string.Format("PDF file doesn't exist in file system. Validate the full path: \"{0}\"", sourcePath));
             }
 
             destinationFolder ??= DestinationFolder;
-            var destinationPath = destinationFolder + filename;
+            var destinationPath = Path.Combine(destinationFolder, filename);
             var _factory = new ImageCompressorFactory();
 
             Logger.LogInfo(string.Format("Start processing of file \"{0}\"", filename));
