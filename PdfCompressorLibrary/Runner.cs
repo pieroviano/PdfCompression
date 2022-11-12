@@ -20,7 +20,7 @@ namespace PdfCompressorLibrary
         /// The value closer to Zero - higher compression, lower quality
         /// The value closer to One - lower compression, higher quality
         /// </summary>
-        private static float compressionLevel = 0.37f;  
+        private static float compressionLevel = 0.37f;
 
         public static string[] Run(string sourceFolder, string destinationFolder, params string[] args)
         {
@@ -31,100 +31,108 @@ namespace PdfCompressorLibrary
             {
                 throw new Exception("Please, provide the PDf filename to start compression!");
             }
-            var filename = args[0];
-            sourceFolder ??= SourceFolder;
-            var sourcePath = Path.Combine(sourceFolder, filename);
-            if (!File.Exists(sourcePath))
+
+            foreach (var filename in args)
             {
-                throw new ArgumentException(string.Format("PDF file doesn't exist in file system. Validate the full path: \"{0}\"", sourcePath));
-            }
-
-            destinationFolder ??= DestinationFolder;
-            var destinationPath = Path.Combine(destinationFolder, filename);
-            var _factory = new ImageCompressorFactory();
-
-            Logger.LogInfo(string.Format("Start processing of file \"{0}\"", filename));
-            var timing = Stopwatch.StartNew();
-
-            PdfReader.unethicalreading = true;
-            var pdfReader = new PdfReader(sourcePath);
-            list.Add(destinationPath);
-            using (var fs = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                using (var pdfStamper = new PdfStamper(pdfReader, fs))
+                sourceFolder ??= SourceFolder;
+                var sourcePath = Path.Combine(sourceFolder, filename);
+                if (!File.Exists(sourcePath))
                 {
-                    var wasCompressed = false;
-                    var totalPages = pdfReader.NumberOfPages + 1;
-                    Logger.LogInfo(string.Format("Total number of pages is: {0}", totalPages - 1));
-                    for (int i = 1; i < totalPages; i++)
+                    throw new ArgumentException(string.Format("PDF file doesn't exist in file system. Validate the full path: \"{0}\"", sourcePath));
+                }
+
+                destinationFolder ??= DestinationFolder;
+                var destinationPath = Path.Combine(destinationFolder, filename);
+                var factory = new ImageCompressorFactory();
+
+                Logger.LogInfo(string.Format("Start processing of file \"{0}\"", filename));
+                var timing = Stopwatch.StartNew();
+
+                PdfReader.unethicalreading = true;
+                var pdfReader = new PdfReader(sourcePath);
+                list.Add(destinationPath);
+                if (File.Exists(destinationPath))
+                {
+                    File.Delete(destinationPath);
+                }
+                using (var fs = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    using (var pdfStamper = new PdfStamper(pdfReader, fs))
                     {
-                        PdfDictionary page = pdfReader.GetPageN(i);
-                        PdfDictionary resources = (PdfDictionary)PdfReader.GetPdfObject(page.Get(PdfName.RESOURCES));
-                        PdfDictionary xobject = (PdfDictionary)PdfReader.GetPdfObject(resources.Get(PdfName.XOBJECT));
-
-                        if (xobject != null)
+                        var wasCompressed = false;
+                        var totalPages = pdfReader.NumberOfPages + 1;
+                        Logger.LogInfo(string.Format("Total number of pages is: {0}", totalPages - 1));
+                        for (int i = 1; i < totalPages; i++)
                         {
-                            foreach (var name in xobject.Keys)
+                            PdfDictionary page = pdfReader.GetPageN(i);
+                            PdfDictionary resources = (PdfDictionary)PdfReader.GetPdfObject(page.Get(PdfName.RESOURCES));
+                            PdfDictionary xobject = (PdfDictionary)PdfReader.GetPdfObject(resources.Get(PdfName.XOBJECT));
+
+                            if (xobject != null)
                             {
-                                var obj = xobject.Get(name);
-                                if (obj.IsIndirect())
+                                foreach (var name in xobject.Keys)
                                 {
-                                    var imgObject = (PdfDictionary)PdfReader.GetPdfObject(obj);
-
-                                    if (imgObject != null && imgObject.Get(PdfName.SUBTYPE).Equals(PdfName.IMAGE))
+                                    var obj = xobject.Get(name);
+                                    if (obj.IsIndirect())
                                     {
-                                        var filter = imgObject.Get(PdfName.FILTER);
+                                        var imgObject = (PdfDictionary)PdfReader.GetPdfObject(obj);
 
-                                        Logger.LogDebug(string.Format("page num: {0}. Filter {1}", i, filter));
-
-                                        var compressor = _factory.Create(filter, filename, compressionLevel);
-                                        if (compressor != null)
+                                        if (imgObject != null && imgObject.Get(PdfName.SUBTYPE).Equals(PdfName.IMAGE))
                                         {
-                                            try
-                                            {
-                                                compressor.Compress(obj, imgObject, pdfStamper, i);
-                                            }
-                                            catch (UnsupportedPdfException ex)
-                                            {
-                                                Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
-                                            }
-                                            catch (KeyNotFoundException ex)
-                                            {
-                                                Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
-                                            }
-                                            catch (InvalidImageException ex)
-                                            {
-                                                Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Logger.LogWarning(string.Format("Skip compression for {0} type of image", filter));
-                                        }
+                                            var filter = imgObject.Get(PdfName.FILTER);
 
-                                        Logger.Log(TraceEventType.Information, string.Format("Image on page {0} compressed successfully", i));
-                                        wasCompressed = true;
+                                            Logger.LogDebug(string.Format("page num: {0}. Filter {1}", i, filter));
+
+                                            var compressor = factory.Create(filter, filename, compressionLevel);
+                                            if (compressor != null)
+                                            {
+                                                try
+                                                {
+                                                    compressor.Compress(obj, imgObject, pdfStamper, i);
+                                                }
+                                                catch (UnsupportedPdfException ex)
+                                                {
+                                                    Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
+                                                }
+                                                catch (KeyNotFoundException ex)
+                                                {
+                                                    Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
+                                                }
+                                                catch (InvalidImageException ex)
+                                                {
+                                                    Logger.LogError(string.Format("Exception at file \"{0}\" on page {1}. {2}", filename, i, ex));
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Logger.LogWarning(string.Format("Skip compression for {0} type of image", filter));
+                                            }
+
+                                            Logger.Log(TraceEventType.Information, string.Format("Image on page {0} compressed successfully", i));
+                                            wasCompressed = true;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                pdfReader.SetPageContent(i, pdfReader.GetPageContent(i), PdfStream.BEST_COMPRESSION, true);
+                            }
                         }
-                        else
-                        {
-                            pdfReader.SetPageContent(i, pdfReader.GetPageContent(i), PdfStream.BEST_COMPRESSION, true);
-                        }
-                    }
 
-                    if (!wasCompressed)
-                    {
-                        pdfReader.RemoveUnusedObjects();
-                        pdfReader.RemoveAnnotations();
+                        if (!wasCompressed)
+                        {
+                            pdfReader.RemoveUnusedObjects();
+                            pdfReader.RemoveAnnotations();
+                        }
                     }
                 }
+
+                Logger.LogInfo(string.Format("Compression of file \"{0}\" completed on \"{1}\"", filename, timing.Elapsed));
+                var compression = CalculateCompression(sourcePath, destinationPath);
+                Logger.LogInfo(string.Format("File was compressed on {0} %", compression));
             }
 
-            Logger.LogInfo(string.Format("Compression of file \"{0}\" completed on \"{1}\"",filename, timing.Elapsed));
-            var compression = CalculateCompression(sourcePath, destinationPath);
-            Logger.LogInfo(string.Format("File was compressed on {0} %", compression));
             return list.ToArray();
         }
 
