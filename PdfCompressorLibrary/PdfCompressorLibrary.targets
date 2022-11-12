@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Content Include="$(USERPROFILE)\.nuget\packages\pdfcompressorlibrary\1.0.0\lib\net45\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

@@ -39,15 +39,12 @@ namespace PdfCompressorLibrary
             }
 
             var destinationPath = DestinationFolder + filename;
-            if (!FreeImage.IsAvailable())
-            {
-                throw new ApplicationException("FreeImage library isn't available");
-            }
             var _factory = new ImageCompressorFactory();
 
             Logger.LogInfo(string.Format("Start processing of file \"{0}\"", filename));
             var timing = Stopwatch.StartNew();
 
+            PdfReader.unethicalreading = true;
             var pdfReader = new PdfReader(sourcePath);
             using (var fs = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
@@ -127,7 +124,7 @@ namespace PdfCompressorLibrary
             Logger.LogInfo(string.Format("File was compressed on {0} %", compression));
         }
 
-        private static void ReadConfigSettings()
+        public static (string, string) ReadConfigSettings()
         {
             var config = ConfigurationManager.OpenExeConfiguration("PdfCompressorLibrary.dll");
             if (config.AppSettings.Settings.Count == 0)
@@ -143,6 +140,7 @@ namespace PdfCompressorLibrary
 
             SourceFolder = config.AppSettings.Settings["sourcePdfFolder"].Value;
             DestinationFolder = config.AppSettings.Settings["destinationPdfFolder"].Value;
+            return (SourceFolder, DestinationFolder);
         }
 
         private static int CalculateCompression(string source, string dest)
