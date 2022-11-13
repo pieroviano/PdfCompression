@@ -15,12 +15,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0-windows'">
-    <Content Include="$(USERPROFILE)\.nuget\packages\pdfcompressorlibrary\1.0.0\lib\net5.0-windows\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
+    <Content Include="$(USERPROFILE)\.nuget\packages\pdfcompressorlibrary\1.0.0\lib\net5.0-windows7.0\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
-    <Content Include="$(USERPROFILE)\.nuget\packages\pdfcompressorlibrary\1.0.0\lib\net6.0-windows\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
+    <Content Include="$(USERPROFILE)\.nuget\packages\pdfcompressorlibrary\1.0.0\lib\net6.0-windows7.0\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
