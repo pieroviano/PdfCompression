@@ -154,8 +154,8 @@ namespace PdfCompressorLibrary
                 config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
             }
 
-            SourceFolder = config.AppSettings.Settings["sourcePdfFolder"].Value;
-            DestinationFolder = config.AppSettings.Settings["destinationPdfFolder"].Value;
+            SourceFolder = config.AppSettings.Settings["sourcePdfFolder"]?.Value;
+            DestinationFolder = config.AppSettings.Settings["destinationPdfFolder"]?.Value;
 #if NET40
             return new Tuple<string, string>(SourceFolder, DestinationFolder);
 #else
