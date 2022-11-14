@@ -24,7 +24,14 @@ namespace PdfCompressorLibrary
 
         public static string[] Run(string sourceFolder, string destinationFolder, params string[] args)
         {
-            ReadConfigSettings();
+            try
+            {
+                ReadConfigSettings();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             var list = new List<string>();
 
             if (args == null || args.Length == 0)
