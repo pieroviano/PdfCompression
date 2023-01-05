@@ -8,7 +8,6 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <PackageId>$(AssemblyName)</PackageId>
     <IncludeSymbols>True</IncludeSymbols>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <LangVersion>latest</LangVersion>
     <Title>PdfCompression</Title>
     <Authors>EPAM Systems</Authors>
@@ -83,7 +82,13 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
-  <Target Name="DeleteOldPackage" AfterTargets="Pack" Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">
-    <Exec Command="copy /y $(ProjectDir)bin\$(Configuration)\*.nupkg $(SolutionDir)Packages" />
-  </Target>
+  <PropertyGroup>
+    <PackageId>$(MSBuildProjectName).PieroViano</PackageId>
+    <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
+  </PropertyGroup>
+  <Import Project="$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props" Condition="Exists('$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props')" />
+  <ItemGroup>
+    <PackageReference Include="ObfuscatorUtility.PieroViano" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 </Project>
