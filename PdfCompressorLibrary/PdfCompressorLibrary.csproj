@@ -21,6 +21,7 @@
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>https://github.com/rock-walker/PdfCompression</RepositoryType>
+    <PdfCompressorLibraryVersion Condition="'$(PdfCompressorLibraryVersion)' == ''">1.0.0</PdfCompressorLibraryVersion>
     <Version>$(PdfCompressorLibraryVersion)$(Suffix)</Version>
   </PropertyGroup>
   <ItemGroup>
@@ -95,7 +96,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)$(VersionBuildSuffix)" PrivateAssets="All" />
+    <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion).$(VersionBuildSuffix)" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
