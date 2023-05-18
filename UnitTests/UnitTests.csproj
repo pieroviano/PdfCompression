@@ -15,7 +15,7 @@
     <Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VVVV.FreeImage" Version="3.15.1.1" />
+    <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
