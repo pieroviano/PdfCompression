@@ -1,34 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <AssemblyTitle>UnitTests</AssemblyTitle>
-    <Company>EPAM Systems</Company>
-    <Product>UnitTests</Product>
-    <Copyright>Copyright © EPAM Systems 2017</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <Platforms>AnyCPU</Platforms>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PdfCompressorLibrary\PdfCompressorLibrary.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Destination\PlaceHolder.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Source\*.pdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<IsCodedUITest>False</IsCodedUITest>
+		<TestProjectType>UnitTest</TestProjectType>
+		<AssemblyTitle>UnitTests</AssemblyTitle>
+		<Company>EPAM Systems</Company>
+		<Product>UnitTests</Product>
+		<Copyright>Copyright © EPAM Systems 2017</Copyright>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<Platforms>AnyCPU</Platforms>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="..\PdfCompressorLibrary.dll.config" Link="PdfCompressorLibrary.dll.config" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
+		<PackageReference Include="Net4x.NunitTests" Version="$(Net4xMsTestsVersion).$(VersionBuildSuffix)" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\PdfCompressorLibrary\PdfCompressorLibrary.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Destination\PlaceHolder.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Source\*.pdf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>

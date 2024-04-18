@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using PdfCompressorLibrary;
 
 namespace UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class RunnerTest
     {
         public static void Main()
@@ -15,11 +15,15 @@ namespace UnitTests
             new RunnerTest().RunCompression();
         }
 
-        [TestMethod]
+        [Test]
         public void RunCompression()
         {
-            var (sourceFolder,targetFolder)=PdfCompressor.ReadConfigSettings();
-            PdfCompressor.Run(sourceFolder, targetFolder, Directory.GetFiles(sourceFolder, "*.pdf").Select(f=> Path.GetFileName(f)).ToArray());
+            var (sourceFolder, targetFolder) = PdfCompressor.ReadConfigSettings();
+            PdfCompressor.Run(
+                sourceFolder,
+                targetFolder,
+                Directory.GetFiles(sourceFolder, "*.pdf").Select(f => Path.GetFileName(f)).ToArray()
+            );
         }
     }
 }
