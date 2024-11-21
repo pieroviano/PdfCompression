@@ -7,7 +7,6 @@
 		<Company>EPAM Systems</Company>
 		<Product>UnitTests</Product>
 		<Copyright>Copyright © EPAM Systems 2017</Copyright>
-		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<Platforms>AnyCPU</Platforms>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
