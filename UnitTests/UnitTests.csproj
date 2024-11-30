@@ -6,7 +6,7 @@
 		<AssemblyTitle>UnitTests</AssemblyTitle>
 		<Company>EPAM Systems</Company>
 		<Product>UnitTests</Product>
-		<Copyright>Copyright © EPAM Systems 2017</Copyright>
+		<Copyright>Copyright (c) EPAM Systems 2017</Copyright>
 		<Platforms>AnyCPU</Platforms>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>

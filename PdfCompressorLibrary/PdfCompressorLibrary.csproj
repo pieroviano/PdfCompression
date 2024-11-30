@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-16"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" />
+    <Import Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" />
     <PropertyGroup>
         <TargetFrameworks>net40;net45;net48;net5.0-windows;net6.0-windows</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -10,7 +10,7 @@
         <AssemblyTitle>PdfCompressorLibrary</AssemblyTitle>
         <Company>EPAM Systems</Company>
         <Product>PdfCompressor</Product>
-        <Copyright>Copyright © EPAM Systems 2017</Copyright>
+        <Copyright>Copyright (c) EPAM Systems 2017</Copyright>
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <IncludeSymbols>True</IncludeSymbols>
         <LangVersion>latest</LangVersion>
@@ -69,22 +69,22 @@
         <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
     </ItemGroup>
     <ItemGroup>
+        <Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
         <Reference Include="System.configuration" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
         <Reference Include="System.Data.DataSetExtensions" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
-        <Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Autoinform.iTextSharp.Pdfa" Version="$(iTextSharpPdfaVersion).$(VersionBuildSuffix)" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
-        <PackageReference Include="iTextSharp.netstandard" Version="5.5.13.2" Condition="'$(TargetFramework)' == 'net6.0-windows' or '$(TargetFramework)' == 'net5.0-windows'" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" Condition="'$(TargetFramework)' == 'net5.0-windows'" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" Condition="'$(TargetFramework)' == 'net6.0-windows'" />
+        <PackageReference Include="Autoinform.iTextSharp.Pdfa" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" Version="$(iTextSharpPdfaVersion).$(VersionBuildSuffix)" />
+        <PackageReference Include="iTextSharp.netstandard" Condition="'$(TargetFramework)' == 'net6.0-windows' or '$(TargetFramework)' == 'net5.0-windows'" Version="5.5.13.2" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Condition="'$(TargetFramework)' == 'net5.0-windows'" Version="5.0.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Condition="'$(TargetFramework)' == 'net6.0-windows'" Version="6.0.0" />
     </ItemGroup>
     <PropertyGroup>
         <PackageId>Net4x.$(MSBuildProjectName)</PackageId>
         <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" PrivateAssets="All" />
+        <PackageReference Include="NuGetUtility" PrivateAssets="All" Version="$(NuGetUtilityVersion)" />
     </ItemGroup>
-    <Import Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" />
+    <Import Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" />
 </Project>
