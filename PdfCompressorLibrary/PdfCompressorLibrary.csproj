@@ -74,7 +74,7 @@
         <Reference Include="System.Data.DataSetExtensions" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Autoinform.iTextSharp.Pdfa" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" Version="$(iTextSharpPdfaVersion).$(VersionBuildSuffix)" />
+        <PackageReference Include="Net4x.iTextSharp.Pdfa" Condition="'$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" Version="$(iTextSharpPdfaVersion).$(VersionBuildSuffix)" />
         <PackageReference Include="iTextSharp.netstandard" Condition="'$(TargetFramework)' == 'net6.0-windows' or '$(TargetFramework)' == 'net5.0-windows'" Version="5.5.13.2" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Condition="'$(TargetFramework)' == 'net5.0-windows'" Version="5.0.0" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Condition="'$(TargetFramework)' == 'net6.0-windows'" Version="6.0.0" />
